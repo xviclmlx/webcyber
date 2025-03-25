@@ -1,0 +1,88 @@
+/* 🔹 Estilos para la barra de navegación */
+.navbar {
+    background: #333;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 🔥 Distribuye los elementos */
+    position: fixed; /* 🔥 Fija el navbar arriba */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* 🔹 Lista del menú */
+  .navList {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* 🔹 Estilos para los enlaces */
+  .navLink {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .navLink:hover {
+    color: #00bcd4;
+  }
+  
+  /* 🔹 Botón de cerrar sesión */
+  .logoutButton {
+    background-color: red;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+  
+  .logoutButton:hover {
+    background-color: darkred;
+    transform: scale(1.05);
+  }
+  
+  /* 🔥 Ajuste del botón de inicio de sesión */
+  .loginButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    position: absolute;
+    bottom: 15px; /* 🔥 Lo baja más */
+    left: 15px; /* 🔥 Lo mueve un poco a la izquierda */
+    transition: 0.3s;
+  }
+  
+  .loginButton:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* 🔹 Contenedor del menú para mejor alineación */
+  .menuContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* 🔹 Ajuste para el logo */
+  .logo {
+    height: 40px;
+    width: auto;
+    margin-right: auto;
+  }
+  

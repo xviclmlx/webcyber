@@ -1,0 +1,207 @@
+/* 🔹 Estilo global para modo oscuro */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212; /* 🔥 Modo oscuro */
+    color: white;
+    font-family: "Arial", sans-serif;
+}
+
+/* 🔹 Fondo de pantalla ajustado */
+.homeContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../assets/12.png"); /* Imagen de fondo */
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: 100% center; /* 🔥 Movida un poco a la derecha */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out; /* 🔥 Animación de entrada */
+}
+
+/* 🔹 Logo en la esquina superior izquierda */
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: auto;
+    animation: bounce 1.5s infinite alternate;
+}
+
+/* 🔹 Título con efecto glitch */
+.homeTitle {
+    position: absolute;
+    top: 15%; /* 🔥 Ajusta la altura del título más arriba */
+    left: 50%;
+    transform: translateX(-50%); /* 🔥 Centrado horizontalmente */
+    font-size: 4rem;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 3px;
+    text-align: center;
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+
+@keyframes flicker {
+    0% { text-shadow: 0 0 5px rgb(26, 30, 30), 0 0 10px #0ff, 0 0 15px #0ff; }
+    100% { text-shadow: 0 0 2px rgb(46, 50, 50), 0 0 5px #0ff, 0 0 10px #0ff; }
+}
+
+/* 🔹 Contenedor de los botones alineados a la izquierda */
+.authButtons {
+    position: absolute;
+    bottom: 80px; /* 🔥 Espaciado del fondo */
+    left: 30px;  /* 🔥 Movidos a la izquierda */
+    display: flex;
+    flex-direction: column; /* 🔥 Uno debajo del otro */
+    align-items: center;
+    gap: 15px; /* 🔥 Espaciado entre botones */
+}
+
+/* 🔹 Botones de login y registro con animación */
+.loginButton, .registerButton {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+    width: 200px; /* 🔥 Tamaño uniforme */
+    text-align: center;
+    animation: slideInLeft 1s ease-in-out;
+}
+
+.loginButton {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+.registerButton {
+    background-color: #28a745;
+    color: white;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+}
+
+.loginButton:hover, .registerButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.6);
+}
+
+/* 🔹 Animaciones */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+
+/* 🔹 Modal Mejorado */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+/* 🔹 Imagen en el modal (Corrección para evitar zoom) */
+.modalImage {
+    width: 100%;  /* 🔥 Ajuste automático del ancho */
+    max-height: 320px; /* 🔥 Altura máxima sin deformar */
+    border-radius: 10px;
+    object-fit: contain; /* 🔥 Evita recortes o zoom */
+    margin-bottom: 15px;
+}
+
+/* 🔹 Contenedor del modal */
+.modalContent {
+    background: #222; /* 🔥 Fondo oscuro */
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 500px; 
+    max-height: 85vh;
+    color: white;
+    animation: fadeIn 0.3s ease-in-out;
+    overflow-y: auto;
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 🔹 Botón de cerrar */
+.closeButton {
+    background-color: #dc3545;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.2s;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.closeButton:hover {
+    transform: scale(1.08);
+    background-color: #c82333;
+}
+
+/* 🔹 Botón de compra en el modal */
+.buyButton {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.buyButton:hover {
+    transform: scale(1.05);
+    background-color: #0056b3;
+}
+
+/* 🔹 Contenedor de PayPal */
+.paypalContainer {
+    width: 100%;
+    padding: 10px;
+    background: #2a2a2a; /* 🔥 Más oscuro */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
