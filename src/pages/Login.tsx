@@ -34,8 +34,14 @@ export default function Login() {
         const json = (await response.json()) as AuthResponse;
 
         if (json.accessToken && json.refreshToken) {
-          auth.saveUser(json);
-          navigate("/dashboard");
+          await auth.saveUser(json); // ✅ Esperar a que se guarde el usuario
+
+          // ✅ Redirigir según el rol del usuario
+          if (json.user?.rol === "ADMIN") {
+            navigate("/admin/test");
+          } else {
+            navigate("/dashboard");
+          }
         }
       } else {
         const json = (await response.json()) as AuthResponseError;

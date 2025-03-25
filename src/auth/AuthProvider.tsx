@@ -12,6 +12,7 @@ const AuthContext = createContext<{
     getAccessToken: () => string;
     saveUser: (userData: AuthResponse) => void;
     logout: () => void;
+    user?: User;
 }>({
     isAuthenticated: false,
     getAccessToken: () => "",
@@ -159,7 +160,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, getAccessToken, saveUser, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, getAccessToken, saveUser, logout, user }}>
             {children}
         </AuthContext.Provider>
     );

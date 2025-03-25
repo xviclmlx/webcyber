@@ -16,6 +16,8 @@ import ProtectedRoute from './routes/ProtectedRoute.tsx';
 import DefaultLayout from './layout/DefaultLayout.tsx';
 import { AuthProvider } from './auth/AuthProvider.tsx';
 
+import AdminTest from './pages/admin/test.tsx'; // ✅ Importamos tu vista admin
+
 // 🛠️ Configuración de rutas
 const router = createBrowserRouter([
   {
@@ -49,6 +51,21 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />
+      }
+    ]
+  },
+  // 🔐 NUEVAS rutas protegidas para ADMIN
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute requiredRole="ADMIN">
+        <DefaultLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "test",
+        element: <AdminTest />
       }
     ]
   }

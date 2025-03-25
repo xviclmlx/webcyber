@@ -5,8 +5,9 @@ export interface AuthResponse {
         refreshToken: string;
         user?: {
             id:number
-            email: string
-            name: string
+            email: string;
+            name: string;
+            rol: 'ADMIN' | 'USER';
         }
         
 
@@ -24,6 +25,7 @@ export interface User {
     _id:string;
     name:string;
     email:string;
+    rol: 'ADMIN' | 'USER';
 }
 
 export interface AccessTokenResponse{
