@@ -2,76 +2,76 @@ import { StrictMode } from 'react';
 import ReactDOM from "react-dom/client";
 import './index.css';
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet
+} from 'react-router-dom';
 
 import Home from './pages/Home.tsx';
 import Login from './pages/Login.tsx';
-import Register from './pages/Register.tsx'; // ✅
+import Register from './pages/Register.tsx';
 
-import Dashboard from './routes/Dashboard.tsx';
+// CLIENTE
+import ClientProfile from './pages/client/Profile.tsx';
 import Comparaciones from './pages/client/Comparaciones.tsx';
-import Profile from './pages/client/Profile.tsx';
+import Recorridos from './pages/client/Recorridos.tsx';
+
+// ADMIN
+import AdminProfile from './pages/admin/Profile.tsx';
+import Usuarios from './pages/admin/Usuarios.tsx';
+import Records from './pages/admin/Records.tsx';
 
 import ProtectedRoute from './routes/ProtectedRoute.tsx';
 import DefaultLayout from './layout/DefaultLayout.tsx';
 import { AuthProvider } from './auth/AuthProvider.tsx';
 
-import AdminTest from './pages/admin/test.tsx'; // ✅ Importamos tu vista admin
+// 🔐 Layout del CLIENTE
+const ClientLayout = () => (
+  <ProtectedRoute allowedRoles={["USER"]}>
+    <DefaultLayout>
+      <Outlet />
+    </DefaultLayout>
+  </ProtectedRoute>
+);
 
-// 🛠️ Configuración de rutas
+// 🔐 Layout del ADMIN
+const AdminLayout = () => (
+  <ProtectedRoute allowedRoles={["ADMIN"]}>
+    <DefaultLayout>
+      <Outlet />
+    </DefaultLayout>
+  </ProtectedRoute>
+);
+
+// 🔗 Rutas
 const router = createBrowserRouter([
+  { path: "/", element: <Home /> },
+  { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
+
   {
-    path: "/", // Página pública principal
-    element: <Home />
-  },
-  {
-    path: "/login", // Página pública
-    element: <Login />
-  },
-  {
-    path: "/register", // ✅ Usamos /register en lugar de /signup
-    element: <Register />
-  },
-  {
-    path: "/", // Rutas protegidas (navbar + autenticación)
-    element: (
-      <ProtectedRoute>
-        <DefaultLayout />
-      </ProtectedRoute>
-    ),
+    path: "/client",
+    element: <ClientLayout />,
     children: [
-      {
-        path: "/dashboard",
-        element: <Dashboard />
-      },
-      {
-        path: "/comparaciones",
-        element: <Comparaciones />
-      },
-      {
-        path: "/profile",
-        element: <Profile />
-      }
+      { path: "profile", element: <ClientProfile /> },
+      { path: "comparaciones", element: <Comparaciones /> },
+      { path: "recorridos", element: <Recorridos /> }
     ]
   },
-  // 🔐 NUEVAS rutas protegidas para ADMIN
+
   {
     path: "/admin",
-    element: (
-      <ProtectedRoute requiredRole="ADMIN">
-        <DefaultLayout />
-      </ProtectedRoute>
-    ),
+    element: <AdminLayout />,
     children: [
-      {
-        path: "test",
-        element: <AdminTest />
-      }
+      { path: "profile", element: <AdminProfile /> },
+      { path: "usuarios", element: <Usuarios /> },
+      { path: "records", element: <Records /> }
     ]
   }
 ]);
 
-// 🧠 Montaje en el DOM
+// 🧠 Render
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
     <AuthProvider>

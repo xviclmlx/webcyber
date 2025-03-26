@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
 import { API_URL } from "../auth/constatns";
 import { AuthResponse, AuthResponseError } from "../Types/types";
-import styles from "../styles/Login.module.css"; // Estilos bonitos
+import styles from "../styles/Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,8 +13,10 @@ export default function Login() {
   const auth = useAuth();
   const navigate = useNavigate();
 
+  // 🔁 Corregido: redirige al perfil según el rol
   if (auth.isAuthenticated) {
-    return <Navigate to="/dashboard" />;
+    const rol = auth.user?.rol;
+    return <Navigate to={rol === "ADMIN" ? "/admin/profile" : "/client/profile"} />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,13 +36,13 @@ export default function Login() {
         const json = (await response.json()) as AuthResponse;
 
         if (json.accessToken && json.refreshToken) {
-          await auth.saveUser(json); // ✅ Esperar a que se guarde el usuario
+          await auth.saveUser(json);
 
-          // ✅ Redirigir según el rol del usuario
+          // 🔁 Redirige según el rol
           if (json.user?.rol === "ADMIN") {
-            navigate("/admin/test");
+            navigate("/admin/profile");
           } else {
-            navigate("/dashboard");
+            navigate("/client/profile");
           }
         }
       } else {
@@ -56,7 +58,6 @@ export default function Login() {
 
   return (
     <div className={styles.loginContainer}>
-      {/* 🔙 Volver al home */}
       <span onClick={() => navigate("/")} className={styles.backArrow}>
         ⬅️
       </span>

@@ -16,14 +16,17 @@ const Home: React.FC = () => {
 
         {/* Botón de Iniciar Sesión (A la izquierda, más abajo) */}
         <div className={styles.leftButtonContainer}>
-          <button className={styles.loginButton} onClick={() => navigate("/login")}>Iniciar Sesión</button>
+          <button className={styles.loginButton} onClick={() => navigate("/login")}>
+            Iniciar Sesión
+          </button>
         </div>
 
         {/* Nuevo botón de REGISTRARSE que abre el modal */}
         <div className={styles.registerContainer}>
-          <button className={styles.registerButton} onClick={() => setModalOpen(true)}>Registrarse</button>
+          <button className={styles.registerButton} onClick={() => setModalOpen(true)}>
+            Registrarse
+          </button>
         </div>
-
 
         {/* Modal de pago con PayPal */}
         {modalOpen && (
@@ -60,14 +63,17 @@ const Home: React.FC = () => {
                     return actions.order.capture().then((details) => {
                       const payerName = details.payer?.name?.given_name || "Usuario";
                       alert(`Pago exitoso. Bienvenido ${payerName}!`);
-                      navigate("/register"); // 🔥 Redirigir al registro tras pago exitoso
+                      setModalOpen(false); // ✅ Cierra el modal después del pago
+                      navigate("/register"); // ✅ Redirige al formulario de registro
                     });
                   }}
                 />
               </div>
 
               {/* Botón de Cerrar Modal */}
-              <button className={styles.closeButton} onClick={() => setModalOpen(false)}>Cerrar</button>
+              <button className={styles.closeButton} onClick={() => setModalOpen(false)}>
+                Cerrar
+              </button>
             </div>
           </div>
         )}

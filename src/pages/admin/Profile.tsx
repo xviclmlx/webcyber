@@ -3,17 +3,22 @@ import { useAuth } from "../../auth/AuthProvider";
 import { API_URL } from "../../auth/constatns";
 import styles from "../../styles/Profile.module.css";
 
-const Profile = () => {
+const AdminProfile = () => {
   const auth = useAuth();
   const userId = localStorage.getItem("userId");
   const token = auth.getAccessToken();
 
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "", // campo extra para nueva contraseña
+  });
+
   const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchAdmin = async () => {
       try {
         const res = await fetch(`${API_URL}/users/${userId}`, {
           headers: {
@@ -23,16 +28,20 @@ const Profile = () => {
 
         if (res.ok) {
           const data = await res.json();
-          setFormData({ name: data.name || "", email: data.email || "" });
+          setFormData((prev) => ({
+            ...prev,
+            name: data.name || "",
+            email: data.email || "",
+          }));
         } else {
-          setError("Error al obtener los datos del perfil.");
+          setError("Error al obtener los datos del administrador.");
         }
       } catch (err) {
         setError("Error de red.");
       }
     };
 
-    fetchUser();
+    fetchAdmin();
   }, [userId, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +53,12 @@ const Profile = () => {
     setError("");
     setSuccessMessage("");
 
+    const dataToSend = {
+      name: formData.name,
+      email: formData.email,
+      ...(formData.password && { password: formData.password }) // solo si se escribe
+    };
+
     try {
       const res = await fetch(`${API_URL}/users/${userId}`, {
         method: "PATCH",
@@ -51,11 +66,12 @@ const Profile = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       if (res.ok) {
-        setSuccessMessage("Perfil actualizado con éxito 🥳");
+        setSuccessMessage("Perfil actualizado correctamente ✅");
+        setFormData({ ...formData, password: "" }); // limpiar campo de contraseña
       } else {
         const err = await res.json();
         setError(err.message || "Error al actualizar.");
@@ -67,7 +83,7 @@ const Profile = () => {
 
   return (
     <div className={styles.profileContainer}>
-      <h2>Mi Perfil</h2>
+      <h2>Mi Perfil (Admin)</h2>
 
       {error && <p className={styles.errorText}>{error}</p>}
       {successMessage && <p className={styles.successText}>{successMessage}</p>}
@@ -80,7 +96,7 @@ const Profile = () => {
           value={formData.name}
           onChange={handleChange}
           className={styles.input}
-          placeholder="Tu nombre completo"
+          placeholder="Tu nombre"
         />
 
         <label>Correo electrónico</label>
@@ -93,6 +109,16 @@ const Profile = () => {
           placeholder="tucorreo@ejemplo.com"
         />
 
+        <label>Nueva contraseña (opcional)</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          className={styles.input}
+          placeholder="••••••••"
+        />
+
         <button type="submit" className={styles.saveButton}>
           Guardar Cambios
         </button>
@@ -101,4 +127,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default AdminProfile;
