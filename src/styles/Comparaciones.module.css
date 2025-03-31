@@ -1,0 +1,37 @@
+.container {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    color: #fff;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #00aaff;
+    text-align: center;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .loading {
+    text-align: center;
+    color: #ccc;
+    font-style: italic;
+  }
+  
+  .graphContainer {
+    margin-bottom: 3rem;
+  }
+  
+  .graphTitle {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #00bcd4;
+  }
+  

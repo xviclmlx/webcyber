@@ -1,6 +1,6 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import { AccessTokenResponse, AuthResponse, User } from "../Types/types";
-import { API_URL } from "./constatns";
+import { API_URL } from "./constants";
 
 interface AuthProviderProps {
     children: React.ReactNode;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
-import { API_URL } from "../../auth/constatns";
+import { API_URL } from "../../auth/constants";
 import styles from "../../styles/Profile.module.css";
 
 const AdminProfile = () => {
@@ -109,15 +109,7 @@ const AdminProfile = () => {
           placeholder="tucorreo@ejemplo.com"
         />
 
-        <label>Nueva contraseña (opcional)</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          className={styles.input}
-          placeholder="••••••••"
-        />
+
 
         <button type="submit" className={styles.saveButton}>
           Guardar Cambios

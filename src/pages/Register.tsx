@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
-import { API_URL } from "../auth/constatns";
+import { API_URL } from "../auth/constants";
 import { AuthResponseError } from "../Types/types";
 import styles from "../styles/Register.module.css"; // 🎨 Estilos elegantes
 

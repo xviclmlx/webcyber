@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
-import { API_URL } from "../../auth/constatns";
+import { API_URL } from "../../auth/constants";
 import styles from "../../styles/Profile.module.css";
 
 const Profile = () => {
@@ -11,9 +11,16 @@ const Profile = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [successMessage, setSuccessMessage] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!userId || !token) {
+        setError("No se encontró la información del usuario.");
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const res = await fetch(`${API_URL}/users/${userId}`, {
           headers: {
@@ -25,10 +32,13 @@ const Profile = () => {
           const data = await res.json();
           setFormData({ name: data.name || "", email: data.email || "" });
         } else {
-          setError("Error al obtener los datos del perfil.");
+          const errorData = await res.json();
+          setError(errorData.message || "Error al obtener los datos del perfil.");
         }
       } catch (err) {
-        setError("Error de red.");
+        setError("Error de conexión al servidor.");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -36,13 +46,27 @@ const Profile = () => {
   }, [userId, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Limpiar mensajes cuando el usuario empieza a escribir
+    setError("");
+    setSuccessMessage("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
+
+    if (!formData.name.trim() || !formData.email.trim()) {
+      setError("Por favor, complete todos los campos.");
+      return;
+    }
+
+    if (!formData.email.includes('@')) {
+      setError("Por favor, ingrese un correo electrónico válido.");
+      return;
+    }
 
     try {
       const res = await fetch(`${API_URL}/users/${userId}`, {
@@ -58,12 +82,16 @@ const Profile = () => {
         setSuccessMessage("Perfil actualizado con éxito 🥳");
       } else {
         const err = await res.json();
-        setError(err.message || "Error al actualizar.");
+        setError(err.message || "Error al actualizar el perfil.");
       }
     } catch (err) {
-      setError("Error de red.");
+      setError("Error de conexión al servidor.");
     }
   };
+
+  if (isLoading) {
+    return <div className={styles.profileContainer}>Cargando...</div>;
+  }
 
   return (
     <div className={styles.profileContainer}>
@@ -81,6 +109,7 @@ const Profile = () => {
           onChange={handleChange}
           className={styles.input}
           placeholder="Tu nombre completo"
+          required
         />
 
         <label>Correo electrónico</label>
@@ -91,6 +120,7 @@ const Profile = () => {
           onChange={handleChange}
           className={styles.input}
           placeholder="tucorreo@ejemplo.com"
+          required
         />
 
         <button type="submit" className={styles.saveButton}>
