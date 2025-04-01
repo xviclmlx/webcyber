@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
+  AreaChart,
+  Area,
   BarChart,
   Bar,
   XAxis,
@@ -10,7 +12,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 import styles from "../../styles/Records.module.css";
-import { CORE_API } from "../../auth/constants"; // ✅ Usamos CORE_API para rutas generales
+import { CORE_API } from "../../auth/constants";
 
 const Records = () => {
   const [datos, setDatos] = useState([]);
@@ -40,42 +42,60 @@ const Records = () => {
       <div className={styles.graphContainer}>
         <h3 className={styles.graphTitle}>Total de Kilómetros Recorridos</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={datos}>
-            <CartesianGrid strokeDasharray="3 3" />
+          <AreaChart data={datos} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="colorKm" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#4fc3f7" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#4fc3f7" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <XAxis dataKey="nombre" />
             <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="totalKm" fill="#4fc3f7" name="Kilómetros totales" />
-          </BarChart>
+            <Area type="monotone" dataKey="totalKm" stroke="#4fc3f7" fillOpacity={1} fill="url(#colorKm)" name="Kilómetros totales" />
+          </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <div className={styles.graphContainer}>
         <h3 className={styles.graphTitle}>Duración Promedio (segundos)</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={datos}>
-            <CartesianGrid strokeDasharray="3 3" />
+          <AreaChart data={datos} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="colorDur" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#ffb74d" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#ffb74d" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <XAxis dataKey="nombre" />
             <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="promedioDuracion" fill="#ffb74d" name="Duración Promedio" />
-          </BarChart>
+            <Area type="monotone" dataKey="promedioDuracion" stroke="#ffb74d" fillOpacity={1} fill="url(#colorDur)" name="Duración Promedio" />
+          </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <div className={styles.graphContainer}>
         <h3 className={styles.graphTitle}>Temperatura Promedio</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={datos}>
-            <CartesianGrid strokeDasharray="3 3" />
+          <AreaChart data={datos} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <defs>
+              <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#81c784" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#81c784" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <XAxis dataKey="nombre" />
             <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="promedioTemperatura" fill="#81c784" name="Temp. Promedio" />
-          </BarChart>
+            <Area type="monotone" dataKey="promedioTemperatura" stroke="#81c784" fillOpacity={1} fill="url(#colorTemp)" name="Temp. Promedio" />
+          </AreaChart>
         </ResponsiveContainer>
       </div>
     </div>
