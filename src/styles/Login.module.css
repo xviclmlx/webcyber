@@ -1,102 +1,340 @@
 /* 🔥 Contenedor Principal */
 .loginContainer {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-image: url("../assets/12.png"); /* 🔥 Mismo fondo que Home */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center; /* 🔥 Centrada */
-  font-family: "Arial", sans-serif;
+  background: linear-gradient(-45deg, #000000, #1a1a2e, #000B3F, #001F5C);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
   position: relative;
-  animation: fadeIn 1s ease-in-out; /* 🔥 Animación de entrada */
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.loginContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(0, 242, 254, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(79, 172, 254, 0.15) 0%, transparent 50%);
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+.loginContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, transparent 48%, rgba(0, 242, 254, 0.1) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(79, 172, 254, 0.1) 50%, transparent 52%);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
 }
 
 /* 🔙 Flecha de regreso con animación */
 .backArrow {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 2rem;
+  left: 2rem;
+  font-size: 2rem;
   cursor: pointer;
-  font-size: 24px;
-  color: #ffffff;
-  transition: 0.3s ease-in-out;
-  animation: slideInLeft 1s ease-in-out;
+  color: #00f2fe;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+  transition: all 0.3s ease;
+  z-index: 10;
+  animation: floatAnimation 3s ease-in-out infinite;
 }
 
-.backArrow:hover {
-  color: #1e88e5;
-  transform: scale(1.1);
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 /* 🔥 Tarjeta del Formulario con animación */
 .loginCard {
-  background: rgba(28, 28, 28, 0.85); /* 🔥 Fondo con opacidad */
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.1);
-  text-align: center;
-  width: 350px;
-  animation: slideInUp 1s ease-in-out;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 450px;
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  box-shadow: 
+    0 0 30px rgba(0, 242, 254, 0.1),
+    0 0 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 1s ease-out;
+  overflow: hidden;
+}
+
+.loginCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.1) 0%, transparent 70%),
+    linear-gradient(45deg, transparent, rgba(0, 242, 254, 0.05), transparent);
+  border-radius: 20px;
+  z-index: -1;
+  animation: cardGlow 4s ease-in-out infinite;
+}
+
+@keyframes cardGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .loginCard h2 {
-  color: #ffffff;
-  margin-bottom: 20px;
-  animation: fadeIn 1s ease-in-out;
+  color: #00f2fe;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  from {
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.3),
+                 0 0 20px rgba(0, 242, 254, 0.2),
+                 0 0 30px rgba(0, 242, 254, 0.1);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(0, 242, 254, 0.5),
+                 0 0 30px rgba(0, 242, 254, 0.3),
+                 0 0 40px rgba(0, 242, 254, 0.2);
+  }
 }
 
 /* 🔥 Campos de entrada con animación */
 .inputField {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #333;
-  background: #2a2a2a;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  border-radius: 12px;
   color: #ffffff;
-  font-size: 16px;
-  animation: fadeIn 1.2s ease-in-out;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.inputField::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 242, 254, 0.1),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #00f2fe;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.inputField:focus::before {
+  left: 100%;
 }
 
 .inputField::placeholder {
-  color: #aaa;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* 🔥 Botón de inicio de sesión con animación */
 .loginButton {
   width: 100%;
-  padding: 12px;
+  padding: 1.2rem;
+  background: linear-gradient(45deg, #00f2fe, #4facfe);
   border: none;
-  border-radius: 6px;
-  background-color: #1e88e5;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 12px;
+  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
-  animation: slideInUp 1.5s ease-in-out;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  animation: buttonPulse 2s ease-in-out infinite;
 }
 
-.loginButton:hover {
-  background-color: #1565c0;
-  transform: scale(1.05);
+@keyframes buttonPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+  }
+}
+
+.googleButton {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.googleButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 242, 254, 0.1),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.googleButton:hover::before {
+  left: 100%;
+}
+
+.errorMessage {
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #ff4444;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  animation: shake 0.5s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.errorMessage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 0, 0, 0.1),
+    transparent
+  );
+  animation: errorGlow 2s ease-in-out infinite;
+}
+
+@keyframes errorGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* 🔥 Animaciones */
-@keyframes fadeIn {
-  0% { opacity: 0; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1); }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes slideInLeft {
-  0% { opacity: 0; transform: translateX(-50px); }
-  100% { opacity: 1; transform: translateX(0); }
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
 }
 
-@keyframes slideInUp {
-  0% { opacity: 0; transform: translateY(50px); }
-  100% { opacity: 1; transform: translateY(0); }
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@media (max-width: 768px) {
+  .loginCard {
+    padding: 2rem;
+  }
+
+  .loginCard h2 {
+    font-size: 2rem;
+  }
+
+  .backArrow {
+    top: 1rem;
+    left: 1rem;
+  }
 }

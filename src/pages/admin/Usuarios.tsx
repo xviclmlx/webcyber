@@ -2,12 +2,20 @@ import React, { useEffect, useState } from "react";
 import Recorridos from "../client/Recorridos";
 import Comparaciones from "../client/Comparaciones";
 import GraficaResumen from "../../components/GraficaResumen";
+import PedidosEntregados from "../client/PedidosEntregados";
 import { Dialog } from "@headlessui/react";
 import styles from "../../styles/Usuarios.module.css";
 import { API_URL } from "../../auth/constants";
 
+interface Usuario {
+  id: number;
+  name: string;
+  email: string;
+  rol: string;
+}
+
 const Usuarios = () => {
-  const [usuarios, setUsuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [selectedUserRol, setSelectedUserRol] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +29,9 @@ const Usuarios = () => {
   const fetchUsuarios = async () => {
     try {
       const res = await fetch(`${API_URL}/users`);
+      if (!res.ok) {
+        throw new Error('Error al obtener usuarios');
+      }
       const data = await res.json();
       setUsuarios(data);
     } catch (error) {
@@ -170,6 +181,7 @@ const Usuarios = () => {
                 <Recorridos key={`recorridos-${selectedUserId}`} userIdProp={selectedUserId} />
                 <Comparaciones key={`comparaciones-${selectedUserId}`} userIdProp={selectedUserId} />
                 <GraficaResumen userId={selectedUserId} />
+                <PedidosEntregados key={`viajes-${selectedUserId}`} userId={selectedUserId} />
               </>
             )}
 

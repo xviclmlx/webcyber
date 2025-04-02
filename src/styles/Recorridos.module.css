@@ -52,3 +52,53 @@
     color: #00aaff;
   }
   
+  .promediosContainer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .promediosTitle {
+    font-size: 1.5rem;
+    color: #00aaff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .promediosGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .promedioCard {
+    background-color: #2c2c2c;
+    padding: 1.5rem;
+    border-radius: 6px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid #444;
+  }
+  
+  .promedioCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .promedioLabel {
+    display: block;
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+  }
+  
+  .promedioValue {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #00aaff;
+  }
+  
