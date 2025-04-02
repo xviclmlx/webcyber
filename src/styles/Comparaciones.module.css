@@ -1,28 +1,36 @@
 .container {
     padding: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    margin: 2rem auto;
+    max-width: 1400px;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    box-shadow: 
+      0 0 30px rgba(0, 242, 254, 0.1),
+      0 0 60px rgba(0, 0, 0, 0.3);
     color: #fff;
   }
   
   .title {
+    color: #00f2fe;
     font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: #00aaff;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
     text-align: center;
   }
   
   .subtitle {
-    font-size: 1rem;
-    color: #aaa;
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 2rem;
     text-align: center;
   }
   
   .loading {
+    color: #ffffff;
     text-align: center;
-    color: #ccc;
-    font-style: italic;
+    font-size: 1.2rem;
   }
   
   .graphContainer {
@@ -30,8 +38,58 @@
   }
   
   .graphTitle {
+    color: #00f2fe;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
     text-align: center;
-    margin-bottom: 1rem;
-    color: #00bcd4;
+  }
+  
+  .graphsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2rem;
+  }
+  
+  .graphCard {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .graphCard:hover {
+    transform: translateY(-5px);
+    border-color: #00f2fe;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+  }
+  
+  .sensorStatus {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 242, 254, 0.1);
+  }
+  
+  .sensorStatus p {
+    color: #ffffff;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+      margin: 1rem;
+    }
+  
+    .graphsGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
   }
   
