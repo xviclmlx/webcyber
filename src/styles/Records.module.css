@@ -1,54 +1,88 @@
 .container {
-    padding: 2rem;
-    color: #f1f1f1;
-    animation: fadeIn 0.6s ease-in-out;
+  padding: 2rem;
+  color: #f1f1f1;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffeb3b;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subtitle {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.graphContainer {
+  margin-bottom: 2.5rem;
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px #00000066;
+  transition: transform 0.3s ease;
+}
+
+.graphContainer:hover {
+  transform: scale(1.01);
+}
+
+.graphTitle {
+  font-size: 1.2rem;
+  color: #03a9f4;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* 📋 Estilo para tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #2a2a2a;
+  color: #eee;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #333;
+}
+
+thead th {
+  padding: 10px;
+  text-align: left;
+  color: #03a9f4;
+  font-weight: 600;
+}
+
+tbody tr {
+  border-bottom: 1px solid #444;
+}
+
+tbody tr:hover {
+  background-color: #3a3a3a;
+}
+
+td {
+  padding: 10px;
+  color: #ccc;
+}
+
+/* 🎞️ Animación suave al entrar */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
-  
-  .title {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #ffeb3b;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .subtitle {
-    color: #aaa;
-    font-size: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .graphContainer {
-    margin-bottom: 2.5rem;
-    background: #1e1e1e;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 0 10px #00000066;
-    transition: transform 0.3s ease;
-  }
-  
-  .graphContainer:hover {
-    transform: scale(1.01);
-  }
-  
-  .graphTitle {
-    font-size: 1.2rem;
-    color: #03a9f4;
-    margin-bottom: 1rem;
-    font-weight: 600;
-  }
-  
-  /* Animación suave al entrar */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+}
