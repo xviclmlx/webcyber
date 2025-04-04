@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
+  ResponsiveContainer
 } from "recharts";
 import styles from "../../styles/Records.module.css";
 import { CORE_API } from "../../auth/constants";
@@ -17,12 +17,14 @@ const Records = () => {
   const [datosView, setDatosView] = useState([]);
   const [viajeros, setViajeros] = useState([]);
 
-  // ✅ Mostrar números formateados
+  // ✅ Función segura para mostrar números
   const formatNumber = (value) => {
-    return typeof value === "number" ? value.toFixed(2) : "N/A";
+    if (value === null || value === undefined) return "0.00";
+    const parsed = Number(value);
+    return isNaN(parsed) ? "0.00" : parsed.toFixed(2);
   };
 
-  // 📦 Subconsulta: top 3 usuarios
+  // 📦 Subconsulta SQL
   useEffect(() => {
     const fetchSubconsulta = async () => {
       try {
@@ -37,14 +39,18 @@ const Records = () => {
     fetchSubconsulta();
   }, []);
 
-  // 🧠 View SQL completa
+  // 🧠 View SQL
   useEffect(() => {
     const fetchView = async () => {
       try {
         const res = await fetch(`${CORE_API}/viajes/view`);
         const data = await res.json();
-        if (Array.isArray(data)) setDatosView(data);
-        else setDatosView([]);
+        if (Array.isArray(data)) {
+          setDatosView(data);
+        } else {
+          console.warn("⚠️ Vista SQL no devolvió un arreglo:", data);
+          setDatosView([]);
+        }
       } catch (error) {
         console.error("❌ Error en view:", error);
         setDatosView([]);
@@ -53,7 +59,7 @@ const Records = () => {
     fetchView();
   }, []);
 
-  // 👥 Usuarios con +10 viajes
+  // Usuarios con más de 10 viajes
   useEffect(() => {
     const fetchViajeros = async () => {
       try {
@@ -71,17 +77,14 @@ const Records = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>🏁 Comparativa de Usuarios</h2>
+      <h2 className={styles.title}>🏁 Competencia de los usuarios</h2>
       <p className={styles.subtitle}>
-        Se muestran los usuarios con mejor rendimiento, comparando distancia,
-        duración promedio y temperatura.
+        Aquí se comparan los usuarios según su rendimiento acumulado y promedio.
       </p>
 
       {/* 📊 GRÁFICA: Kilómetros */}
       <div className={styles.graphContainer}>
-        <h3 className={styles.graphTitle}>
-          Kilómetros Recorridos (Top 3 usuarios con más viajes)
-        </h3>
+        <h3 className={styles.graphTitle}>Total de Kilómetros Recorridos</h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={datosSubconsulta}>
             <defs>
@@ -109,9 +112,7 @@ const Records = () => {
 
       {/* 📊 GRÁFICA: Duración */}
       <div className={styles.graphContainer}>
-        <h3 className={styles.graphTitle}>
-          Duración Promedio de Viajes (en segundos)
-        </h3>
+        <h3 className={styles.graphTitle}>Duración Promedio (segundos)</h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={datosSubconsulta}>
             <defs>
@@ -139,9 +140,7 @@ const Records = () => {
 
       {/* 📊 GRÁFICA: Temperatura */}
       <div className={styles.graphContainer}>
-        <h3 className={styles.graphTitle}>
-          Temperatura Promedio Durante los Viajes (°C)
-        </h3>
+        <h3 className={styles.graphTitle}>Temperatura Promedio</h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={datosSubconsulta}>
             <defs>
@@ -169,9 +168,7 @@ const Records = () => {
 
       {/* 📋 TABLA: Subconsulta */}
       <div className={styles.graphContainer}>
-        <h3 className={styles.graphTitle}>
-          📦 Subconsulta SQL (Top 3 por cantidad de viajes)
-        </h3>
+        <h3 className={styles.graphTitle}>📦 Subconsulta SQL (Top 3 por cantidad de viajes)</h3>
         <table>
           <thead>
             <tr>
@@ -194,7 +191,7 @@ const Records = () => {
         </table>
       </div>
 
-      {/* 📋 TABLA: View */}
+      {/* 📋 TABLA: View SQL */}
       <div className={styles.graphContainer}>
         <h3 className={styles.graphTitle}>🧠 Vista SQL (Todos los usuarios con viajes)</h3>
         <table>
