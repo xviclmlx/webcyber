@@ -16,6 +16,7 @@ const Records = () => {
   const [datosSubconsulta, setDatosSubconsulta] = useState([]);
   const [datosView, setDatosView] = useState([]);
   const [viajeros, setViajeros] = useState([]);
+  const [usuariosMenosViajes, setUsuariosMenosViajes] = useState([]); // 👈 nuevo estado
 
   // ✅ Función segura para mostrar números
   const formatNumber = (value) => {
@@ -73,6 +74,22 @@ const Records = () => {
       }
     };
     fetchViajeros();
+  }, []);
+
+  // 🆕 Usuarios con menos viajes
+  useEffect(() => {
+    const fetchUsuariosMenosViajes = async () => {
+      try {
+        const res = await fetch(`${CORE_API}/viajes/menos-viajes`);
+        const data = await res.json();
+        if (Array.isArray(data)) setUsuariosMenosViajes(data);
+        else setUsuariosMenosViajes([]);
+      } catch (error) {
+        console.error("❌ Error en usuarios con menos viajes:", error);
+        setUsuariosMenosViajes([]);
+      }
+    };
+    fetchUsuariosMenosViajes();
   }, []);
 
   return (
@@ -207,6 +224,35 @@ const Records = () => {
             {datosView.map((u, i) => (
               <tr key={i}>
                 <td>{u.nombre}</td>
+                <td>{formatNumber(u.totalKm)}</td>
+                <td>{formatNumber(u.promedioDuracion)}</td>
+                <td>{formatNumber(u.promedioTemperatura)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* 📋 TABLA: Usuarios con menos viajes */}
+      <div className={styles.graphContainer}>
+        <h3 className={styles.graphTitle}>📉 Usuarios con menos viajes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Cantidad de viajes</th>
+              <th>Total KM</th>
+              <th>Duración Prom (seg)</th>
+              <th>Temperatura Prom (°C)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usuariosMenosViajes.map((u, i) => (
+              <tr key={i}>
+                <td>{u.nombre}</td>
+                <td>{u.email}</td>
+                <td>{u.cantidadViajes}</td>
                 <td>{formatNumber(u.totalKm)}</td>
                 <td>{formatNumber(u.promedioDuracion)}</td>
                 <td>{formatNumber(u.promedioTemperatura)}</td>
